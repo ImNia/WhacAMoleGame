@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,36 +9,96 @@
     tools:context=".ResultFragment">
 
     <TextView
+        android:id="@+id/text_for_user_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/your_result_text"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/line_hor_1"
+        app:layout_constraintEnd_toStartOf="@+id/line_1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/default_value_best_result"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/line_hor_1"
+        app:layout_constraintStart_toEndOf="@+id/text_for_user_result"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_for_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/best_score"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/line_hor_2"
+        app:layout_constraintEnd_toStartOf="@+id/line_1"
+        app:layout_constraintTop_toTopOf="@+id/line_hor_1" />
+
     <TextView
         android:id="@+id/best_result"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/hello_blank_fragment" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/default_value_best_result"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/line_hor_2"
+        app:layout_constraintStart_toStartOf="@+id/line_1"
+        app:layout_constraintTop_toTopOf="@+id/line_hor_1" />
+
+    <Button
+        android:id="@+id/replay_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/replay_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/line_1"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line_hor_2" />
+
+    <Button
+        android:id="@+id/menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/line_1"
+        app:layout_constraintTop_toTopOf="@+id/line_hor_2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_1"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_hor_1"
         android:orientation="horizontal"
-        >
-        <Button
-            android:id="@+id/replay_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Replay"
-            />
+        app:layout_constraintGuide_percent="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_hor_2"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Menu" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

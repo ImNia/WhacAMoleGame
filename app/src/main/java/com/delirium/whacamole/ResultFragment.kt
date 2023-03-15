@@ -42,6 +42,11 @@ class ResultFragment : Fragment() {
         resultText.text = scoreUser.toString()
         safeResult(scoreUser)
 
+        val best = getBestResult()
+        best?.let {
+            bestResultText.text = it.toString()
+        }
+
         replayButton.setOnClickListener {
             findNavController().navigate(
                 R.id.action_resultFragment_to_game
@@ -73,5 +78,14 @@ class ResultFragment : Fragment() {
             }
             realmDB.commitTransaction()
         }
+    }
+
+    private fun getBestResult() : Int? {
+        var bestResult: DataDB? = null
+        realmDB.beginTransaction()
+        bestResult = realmDB.where(DataDB::class.java).findFirst()
+        realmDB.commitTransaction()
+
+        return bestResult?.result
     }
 }
