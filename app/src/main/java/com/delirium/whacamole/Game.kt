@@ -1,13 +1,18 @@
 package com.delirium.whacamole
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
-class Game : AppCompatActivity() {
-    var score = 0
+class Game : Fragment() {
+    private var score = 0
     lateinit var firstHole: ImageView
     lateinit var secondHole: ImageView
     lateinit var thirdHole: ImageView
@@ -23,21 +28,25 @@ class Game : AppCompatActivity() {
     private val listMole = mutableListOf<Mole>()
     private val queue = mutableListOf<Pair<Long, Int>>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
+        val view = inflater.inflate(R.layout.activity_game, container, false)
 
-        firstHole = findViewById(R.id.first)
-        secondHole = findViewById(R.id.second)
-        thirdHole = findViewById(R.id.third)
-        fourthHole = findViewById(R.id.fourth)
-        fifthHole = findViewById(R.id.fifth)
-        sixthHole = findViewById(R.id.sixth)
-        seventhHole = findViewById(R.id.seventh)
-        eighthHole = findViewById(R.id.eighth)
-        ninthHole = findViewById(R.id.ninth)
-        countView = findViewById(R.id.score)
-        timerView = findViewById(R.id.timer)
+        firstHole = view.findViewById(R.id.first)
+        secondHole = view.findViewById(R.id.second)
+        thirdHole = view.findViewById(R.id.third)
+        fourthHole = view.findViewById(R.id.fourth)
+        fifthHole = view.findViewById(R.id.fifth)
+        sixthHole = view.findViewById(R.id.sixth)
+        seventhHole = view.findViewById(R.id.seventh)
+        eighthHole = view.findViewById(R.id.eighth)
+        ninthHole = view.findViewById(R.id.ninth)
+        countView = view.findViewById(R.id.score)
+        timerView = view.findViewById(R.id.timer)
 
         initMoles()
         firstHole.setOnClickListener {
@@ -106,7 +115,10 @@ class Game : AppCompatActivity() {
 
         object : CountDownTimer(30000, 1000) {
             override fun onFinish() {
-                finish()
+                val bundle = bundleOf("resultScore" to score)
+                findNavController().navigate(
+                    R.id.action_game_to_resultFragment, bundle
+                )
             }
 
             override fun onTick(p0: Long) {
@@ -130,14 +142,15 @@ class Game : AppCompatActivity() {
                 }
             }
         }.start()
+        return view
     }
 
     private fun drawMoles() {
         for (item in listMole) {
             if (item.isVisible) {
-                getViewHole(item.index).setImageDrawable(getDrawable(R.drawable.mole))
+                getViewHole(item.index).setImageDrawable(activity?.getDrawable(R.drawable.mole))
             } else {
-                getViewHole(item.index).setImageDrawable(getDrawable(R.drawable.hole))
+                getViewHole(item.index).setImageDrawable(activity?.getDrawable(R.drawable.hole))
             }
         }
         countView.text = score.toString()

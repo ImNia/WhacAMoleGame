@@ -1,20 +1,17 @@
 package com.delirium.whacamole
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.navigation.fragment.NavHostFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button = findViewById<Button>(R.id.play_button)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment
 
-        button.setOnClickListener {
-            val intent = Intent(this, Game::class.java)
-            startActivity(intent)
-        }
+        val navController = navHostFragment.navController
     }
 }
