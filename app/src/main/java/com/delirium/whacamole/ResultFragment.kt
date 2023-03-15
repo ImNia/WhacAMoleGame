@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import io.realm.Realm
 
 class ResultFragment : Fragment() {
     lateinit var resultText: TextView
@@ -17,6 +18,9 @@ class ResultFragment : Fragment() {
     lateinit var menuButton: Button
 
     var scoreUser: Int? = null
+
+    private val configDB: RealmConfiguration = RealmConfiguration()
+    val realmDB: Realm = Realm.getInstance(configDB.getConfigDB())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +40,7 @@ class ResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         resultText.text = scoreUser.toString()
+        safeResult(scoreUser)
 
         replayButton.setOnClickListener {
             findNavController().navigate(
@@ -47,6 +52,26 @@ class ResultFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_resultFragment_to_menuFragment
             )
+        }
+    }
+
+    private fun safeResult(data: Int?) {
+        if (data != null) {
+            var prevValue: DataDB? = null
+            realmDB.beginTransaction()
+            prevValue = realmDB.where(DataDB::class.java).findFirst()
+
+            if (prevValue?.result != null && prevValue.result < data) {
+                realmDB.deleteAll()
+                realmDB.copyToRealm(DataDB(
+                    result = data
+                ))
+            } else if (prevValue?.result == null) {
+                realmDB.copyToRealm(DataDB(
+                    result = data
+                ))
+            }
+            realmDB.commitTransaction()
         }
     }
 }
